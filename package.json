@@ -14,7 +14,8 @@
     "seed": "payload run scripts/seed.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "sync": "payload run scripts/sync.ts"
+    "sync": "payload run scripts/sync.ts",
+    "covers": "node design/covers/build.mjs && payload run scripts/apply-covers.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

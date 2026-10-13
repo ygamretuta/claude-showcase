@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e1b4b"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+     <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb7185"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+     <linearGradient id="gB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient>
+     <linearGradient id="gC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#ec4899"/></linearGradient>
+     <linearGradient id="gP" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d28d9"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+     <filter id="cardShadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="26" stdDeviation="26" flood-color="#0b0630" flood-opacity=".4"/></filter></defs><rect width="1600" height="1000" fill="url(#bg)"/>
+     <circle cx="260" cy="180" r="300" fill="rgba(255,255,255,.06)"/>
+     <circle cx="1400" cy="860" r="380" fill="rgba(255,255,255,.07)"/>
+     
+    <g transform="translate(430 540) rotate(-9) scale(0.9)" filter="url(#cardShadow)">
+      <rect x="-190" y="-250" width="380" height="500" rx="30" fill="#fff"/>
+      <rect x="-160" y="-220" width="320" height="200" rx="20" fill="url(#gA)"/>
+      <circle cx="-95" cy="-135" r="46" fill="rgba(255,255,255,.35)"/>
+      <rect x="-160" y="10" width="190" height="22" rx="11" fill="#2A2438"/>
+      <rect x="-160" y="52" width="300" height="14" rx="7" fill="#CFC8DA"/>
+      <rect x="-160" y="80" width="250" height="14" rx="7" fill="#CFC8DA"/>
+      <rect x="-160" y="130" width="78" height="30" rx="15" fill="#E6E1F2"/>
+      <rect x="-70" y="130" width="78" height="30" rx="15" fill="#E6E1F2"/>
+      <rect x="40" y="168" width="120" height="52" rx="26" fill="url(#gP)"/>
+    </g>
+     
+    <g transform="translate(1170 540) rotate(9) scale(0.9)" filter="url(#cardShadow)">
+      <rect x="-190" y="-250" width="380" height="500" rx="30" fill="#fff"/>
+      <rect x="-160" y="-220" width="320" height="200" rx="20" fill="url(#gB)"/>
+      <circle cx="-95" cy="-135" r="46" fill="rgba(255,255,255,.35)"/>
+      <rect x="-160" y="10" width="190" height="22" rx="11" fill="#2A2438"/>
+      <rect x="-160" y="52" width="300" height="14" rx="7" fill="#CFC8DA"/>
+      <rect x="-160" y="80" width="250" height="14" rx="7" fill="#CFC8DA"/>
+      <rect x="-160" y="130" width="78" height="30" rx="15" fill="#E6E1F2"/>
+      <rect x="-70" y="130" width="78" height="30" rx="15" fill="#E6E1F2"/>
+      <rect x="40" y="168" width="120" height="52" rx="26" fill="url(#gP)"/>
+    </g>
+     
+    <g transform="translate(800 500) rotate(0) scale(1.12)" filter="url(#cardShadow)">
+      <rect x="-190" y="-250" width="380" height="500" rx="30" fill="#fff"/>
+      <rect x="-160" y="-220" width="320" height="200" rx="20" fill="url(#gC)"/>
+      <circle cx="-95" cy="-135" r="46" fill="rgba(255,255,255,.35)"/>
+      <rect x="-160" y="10" width="190" height="22" rx="11" fill="#2A2438"/>
+      <rect x="-160" y="52" width="300" height="14" rx="7" fill="#CFC8DA"/>
+      <rect x="-160" y="80" width="250" height="14" rx="7" fill="#CFC8DA"/>
+      <rect x="-160" y="130" width="78" height="30" rx="15" fill="#E6E1F2"/>
+      <rect x="-70" y="130" width="78" height="30" rx="15" fill="#E6E1F2"/>
+      <rect x="40" y="168" width="120" height="52" rx="26" fill="url(#gP)"/>
+    </g>
+     <g transform="translate(940 640) rotate(-8)" filter="url(#cardShadow)">
+       <path d="M0 0L0 112L30 86L52 134L76 123L54 76L96 76Z" fill="#fff" stroke="#2A2438" stroke-width="6" stroke-linejoin="round"/>
+     </g>
+     <path transform="translate(250 760)" d="M0 -42Q6.3 -6.3 42 0Q6.3 6.3 0 42Q-6.3 6.3 -42 0Q-6.3 -6.3 0 -42Z" fill="#fff" opacity=".9"/><path transform="translate(1360 200)" d="M0 -56Q8.4 -8.4 56 0Q8.4 8.4 0 56Q-8.4 8.4 -56 0Q-8.4 -8.4 0 -56Z" fill="#fff" opacity=".9"/><path transform="translate(560 120)" d="M0 -28Q4.2 -4.2 28 0Q4.2 4.2 0 28Q-4.2 4.2 -28 0Q-4.2 -4.2 0 -28Z" fill="#fff" opacity=".9"/><path transform="translate(1210 880)" d="M0 -30Q4.5 -4.5 30 0Q4.5 4.5 0 30Q-4.5 4.5 -30 0Q-4.5 -4.5 0 -30Z" fill="#fff" opacity=".9"/></svg>
