@@ -14,7 +14,8 @@
     "seed": "payload run scripts/seed.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "sync": "payload run scripts/sync.ts"
+    "sync": "payload run scripts/sync.ts",
+    "migrate:create": "BLOB_READ_WRITE_TOKEN=vercel_blob_rw_schemaonly_dummy payload migrate:create"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
