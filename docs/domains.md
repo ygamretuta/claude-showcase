@@ -14,11 +14,13 @@ taxonomy            (tags)                    supporting
 catalog             (works)                   CORE
 curation            (exhibits, home page)     core
 profile             (owner, site settings)    generic
+activity            (GitHub repo snapshots)   supporting
 
 media <- taxonomy      (taxonomy is independent; shown for layering only)
 media <- catalog       catalog references media and tags
 catalog <- curation    curation references works
 media <- profile       profile references media
+catalog <- activity    activity reads works' repository URLs; catalog never imports activity
 ```
 
 Dependencies point one way: a domain may reference documents of domains to its left, never the
@@ -40,6 +42,8 @@ into another's internals. Generic helpers live in `src/shared/payload/`.
 | Featured works | The ordered works the home page leads with. | curation |
 | Profile | The owner's public identity and contact details. | profile |
 | Editor | A person allowed to sign in to the admin. | identity |
+| Repository activity | A synced snapshot of a work's GitHub repository. | activity |
+| Discovery | Creating a draft work for a repository tagged `claude-built`. | activity |
 
 ## Adding photography and video
 

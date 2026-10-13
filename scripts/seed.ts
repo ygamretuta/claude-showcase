@@ -1,8 +1,6 @@
 import config from '@payload-config';
 import { getPayload } from 'payload';
 
-import { getSites } from '@/features/showcase/data/sites';
-
 /**
  * Seeds placeholder content so a fresh database renders like the design.
  * Idempotent: skips works whose slug already exists. Placeholder cover images
@@ -11,9 +9,27 @@ import { getSites } from '@/features/showcase/data/sites';
 const payload = await getPayload({ config });
 
 const placeholders = [
-  { title: 'Colorwheel', summary: 'Placeholder: build color palettes with harmony rules.', tags: ['Tool', 'Color'] },
-  { title: 'Pixel Quests', summary: 'Placeholder: a family quest board with rewards.', tags: ['App', 'Family'] },
-  { title: 'Project Three', summary: 'Placeholder: a short description of this site.', tags: ['Site'] },
+  {
+    title: 'Colorwheel',
+    summary: 'Placeholder: build color palettes with harmony rules.',
+    tags: ['Tool', 'Color'],
+    liveUrl: 'https://colorwheel-nine.vercel.app',
+    repositoryUrl: 'https://github.com/ygamretuta/colorwheel',
+  },
+  {
+    title: 'Pixel Quests',
+    summary: 'Placeholder: a family quest board with rewards.',
+    tags: ['App', 'Family'],
+    liveUrl: 'https://pixel-quests.vercel.app',
+    repositoryUrl: 'https://github.com/ygamretuta/pixel-quests',
+  },
+  {
+    title: 'Santayo',
+    summary: 'Placeholder: find restaurants near you by craving.',
+    tags: ['App', 'Food'],
+    liveUrl: 'https://santayo-one.vercel.app',
+    repositoryUrl: 'https://github.com/ygamretuta/santayo',
+  },
 ];
 
 const png =
@@ -22,7 +38,15 @@ const png =
 for (const item of placeholders) {
   const slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   const existing = await payload.find({ collection: 'works', where: { slug: { equals: slug } }, limit: 1 });
-  if (existing.totalDocs > 0) continue;
+  const current = existing.docs[0];
+  if (current) {
+    await payload.update({
+      collection: 'works',
+      id: current.id,
+      data: { website: { liveUrl: item.liveUrl, repositoryUrl: item.repositoryUrl } },
+    });
+    continue;
+  }
 
   const cover = await payload.create({
     collection: 'media',
@@ -47,11 +71,12 @@ for (const item of placeholders) {
       cover: cover.id,
       tags: tagIds,
       publishedOn: new Date().toISOString(),
-      website: { liveUrl: 'https://example.com' },
+      website: { liveUrl: item.liveUrl, repositoryUrl: item.repositoryUrl },
       _status: 'published',
     },
   });
 }
 
-console.log(`Seeded. ${(await getSites()).length} sites published.`);
+const { totalDocs } = await payload.count({ collection: 'works' });
+console.log(`Seeded. ${totalDocs} works.`);
 process.exit(0);

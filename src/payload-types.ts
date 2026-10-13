@@ -73,6 +73,7 @@ export interface Config {
     tags: Tag;
     works: Work;
     exhibits: Exhibit;
+    'repository-activity': RepositoryActivity;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     tags: TagsSelect<false> | TagsSelect<true>;
     works: WorksSelect<false> | WorksSelect<true>;
     exhibits: ExhibitsSelect<false> | ExhibitsSelect<true>;
+    'repository-activity': RepositoryActivitySelect<false> | RepositoryActivitySelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -332,6 +334,41 @@ export interface Exhibit {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "repository-activity".
+ */
+export interface RepositoryActivity {
+  id: number;
+  work: number | Work;
+  /**
+   * owner/name
+   */
+  repository: string;
+  lastCommitAt?: string | null;
+  commitsLast30Days?: number | null;
+  recentCommits?:
+    | {
+        sha: string;
+        message: string;
+        committedAt?: string | null;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  latestRelease?: {
+    name?: string | null;
+    url?: string | null;
+    publishedAt?: string | null;
+  };
+  syncedAt: string;
+  /**
+   * Set when the last sync failed.
+   */
+  syncError?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -377,6 +414,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'exhibits';
         value: number | Exhibit;
+      } | null)
+    | ({
+        relationTo: 'repository-activity';
+        value: number | RepositoryActivity;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -598,6 +639,36 @@ export interface ExhibitsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "repository-activity_select".
+ */
+export interface RepositoryActivitySelect<T extends boolean = true> {
+  work?: T;
+  repository?: T;
+  lastCommitAt?: T;
+  commitsLast30Days?: T;
+  recentCommits?:
+    | T
+    | {
+        sha?: T;
+        message?: T;
+        committedAt?: T;
+        url?: T;
+        id?: T;
+      };
+  latestRelease?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        publishedAt?: T;
+      };
+  syncedAt?: T;
+  syncError?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

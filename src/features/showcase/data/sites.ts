@@ -2,6 +2,7 @@ import config from '@payload-config';
 import { cacheLife, cacheTag } from 'next/cache';
 import { getPayload } from 'payload';
 
+import { describeActivity } from '@/features/activity/lib/describe';
 import type { Media, Tag } from '@/payload-types';
 
 import type { Site } from './types';
@@ -80,7 +81,18 @@ export async function getSites(): Promise<Site[]> {
     limit: 50,
   });
 
+  const activity = await payload.find({
+    collection: 'repository-activity',
+    where: { work: { in: docs.map((work) => work.id) } },
+    limit: 200,
+    pagination: false,
+  });
+  const byWork = new Map(
+    activity.docs.map((item) => [typeof item.work === 'object' ? item.work.id : item.work, item]),
+  );
+
   return docs.map((work, index) => {
+    const snapshot = byWork.get(work.id);
     const cover = populated<Media>(work.cover);
     return {
       slug: work.slug,
@@ -90,6 +102,15 @@ export async function getSites(): Promise<Site[]> {
       url: work.website?.liveUrl ?? '#',
       imageUrl: cover?.sizes?.card?.url ?? cover?.url ?? undefined,
       imageAlt: cover?.alt ?? work.title,
+      activityLabel: snapshot
+        ? (describeActivity(
+            {
+              lastCommitAt: snapshot.lastCommitAt ?? null,
+              commitsLast30Days: snapshot.commitsLast30Days ?? 0,
+            },
+            new Date(),
+          ) ?? undefined)
+        : undefined,
       gradient: gradients[index % gradients.length] ?? gradients[0] ?? '',
     };
   });

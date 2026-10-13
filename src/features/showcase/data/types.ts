@@ -4,6 +4,8 @@ export interface Site {
   summary: string;
   tags: string[];
   url: string;
+  /** Pre-formatted GitHub activity line, e.g. "Active 2 days ago". */
+  activityLabel?: string;
   /** Cover image from the CMS; the gradient is shown when absent. */
   imageUrl?: string;
   imageAlt?: string;

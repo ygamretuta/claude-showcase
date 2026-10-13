@@ -7,6 +7,7 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
 import { buildConfig } from 'payload';
 import sharp from 'sharp';
 
+import { RepositoryActivity } from '@/features/activity/model/RepositoryActivity';
 import { Works } from '@/features/catalog/model/Works';
 import { Exhibits } from '@/features/curation/model/Exhibits';
 import { Home } from '@/features/curation/model/Home';
@@ -21,7 +22,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default buildConfig({
   admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
-  collections: [Users, Media, VideoEmbeds, Tags, Works, Exhibits],
+  collections: [Users, Media, VideoEmbeds, Tags, Works, Exhibits, RepositoryActivity],
   globals: [Home, Profile, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET ?? '',

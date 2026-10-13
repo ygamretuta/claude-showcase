@@ -6,6 +6,8 @@ A portfolio of sites built with Claude. Next.js (App Router), Tailwind v4, shadc
 pnpm dev     # http://localhost:3000
 pnpm build
 pnpm lint
+pnpm test
+pnpm sync     # refresh GitHub activity once
 ```
 
 ## Structure

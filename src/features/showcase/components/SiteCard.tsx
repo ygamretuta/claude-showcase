@@ -35,6 +35,11 @@ export function SiteCard({ site }: { site: Site }) {
         >
           {site.summary}
         </CardItem>
+        {site.activityLabel ? (
+          <CardItem translateZ={25} as="p" className="mt-3 text-xs font-medium text-muted-foreground">
+            {site.activityLabel}
+          </CardItem>
+        ) : null}
         <div className="mt-4 flex items-center justify-between gap-2">
           <CardItem translateZ={20} className="flex flex-wrap gap-2">
             {site.tags.map((tag) => (
