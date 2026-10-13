@@ -2,21 +2,36 @@
   "name": "claude-showcase",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "payload migrate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "payload": "payload",
+    "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap",
+    "seed": "payload run scripts/seed.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "sync": "payload run scripts/sync.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
+    "@payloadcms/db-postgres": "3.90.2",
+    "@payloadcms/next": "3.90.2",
+    "@payloadcms/richtext-lexical": "3.90.2",
+    "@payloadcms/storage-vercel-blob": "3.90.2",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
+    "graphql": "^17.0.2",
     "lucide-react": "^1.55.0",
     "next": "16.4.0",
+    "payload": "3.90.2",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "shadcn": "^4.21.4",
+    "sharp": "^0.35.5",
     "tw-animate-css": "^1.4.0"
   },
   "devDependencies": {
@@ -27,7 +42,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^5.0.4"
   },
   "packageManager": "pnpm@10.28.0"
 }
