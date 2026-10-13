@@ -178,7 +178,6 @@ export interface Media {
    */
   credit?: string | null;
   capturedOn?: string | null;
-  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -495,7 +494,6 @@ export interface MediaSelect<T extends boolean = true> {
   caption?: T;
   credit?: T;
   capturedOn?: T;
-  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
