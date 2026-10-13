@@ -29,3 +29,9 @@ pnpm payload migrate                # create tables
 pnpm seed                           # optional placeholder works
 pnpm dev                            # then open /admin and create the first editor
 ```
+
+## Moving content between databases
+
+`scripts/content-export.ts` writes `content.json` plus media files from the connected database (read-only);
+`scripts/content-import.ts` loads them into another database, matching by slug/title so it is safe to re-run.
+The import prints the target host and refuses to run unless `CONFIRM_HOST` equals it.
