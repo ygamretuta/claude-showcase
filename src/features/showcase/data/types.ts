@@ -4,6 +4,9 @@ export interface Site {
   summary: string;
   tags: string[];
   url: string;
-  /** Tailwind gradient classes used until real screenshots exist. */
+  /** Cover image from the CMS; the gradient is shown when absent. */
+  imageUrl?: string;
+  imageAlt?: string;
+  /** Tailwind gradient classes used until a cover image exists. */
   gradient: string;
 }

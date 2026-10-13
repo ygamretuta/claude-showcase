@@ -1,3 +1,9 @@
+import config from '@payload-config';
+import { cacheLife, cacheTag } from 'next/cache';
+import { getPayload } from 'payload';
+
+import type { Media, Tag } from '@/payload-types';
+
 import type { Site } from './types';
 
 const placeholders: Site[] = [
@@ -51,7 +57,40 @@ const placeholders: Site[] = [
   },
 ];
 
-// Async on purpose: the CMS will replace this body without changing callers.
+const gradients = placeholders.map((site) => site.gradient);
+
+function populated<T extends object>(value: number | T | null | undefined): T | undefined {
+  return typeof value === 'object' && value !== null ? value : undefined;
+}
+
+/** Published website works from the CMS; placeholders when no database is configured. */
 export async function getSites(): Promise<Site[]> {
-  return placeholders;
+  'use cache';
+  cacheTag('works');
+  cacheLife('minutes');
+
+  if (!process.env.DATABASE_URI) return placeholders;
+
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: 'works',
+    where: { kind: { equals: 'website' }, _status: { equals: 'published' } },
+    sort: '-publishedOn',
+    depth: 1,
+    limit: 50,
+  });
+
+  return docs.map((work, index) => {
+    const cover = populated<Media>(work.cover);
+    return {
+      slug: work.slug,
+      title: work.title,
+      summary: work.summary,
+      tags: (work.tags ?? []).flatMap((tag) => populated<Tag>(tag)?.name ?? []),
+      url: work.website?.liveUrl ?? '#',
+      imageUrl: cover?.sizes?.card?.url ?? cover?.url ?? undefined,
+      imageAlt: cover?.alt ?? work.title,
+      gradient: gradients[index % gradients.length] ?? gradients[0] ?? '',
+    };
+  });
 }
