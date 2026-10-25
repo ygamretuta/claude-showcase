@@ -70,7 +70,7 @@ export async function getSites(): Promise<Site[]> {
   cacheTag('works');
   cacheLife('minutes');
 
-  if (!process.env.DATABASE_URI) return placeholders;
+  if (!process.env.DATABASE_URI && !process.env.DATABASE_URL) return placeholders;
 
   const payload = await getPayload({ config });
   const { docs } = await payload.find({
