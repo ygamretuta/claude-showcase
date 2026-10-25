@@ -30,6 +30,12 @@ pnpm seed                           # optional placeholder works
 pnpm dev                            # then open /admin and create the first editor
 ```
 
+## Cover art
+
+Covers are generated illustrations, one per project, in `design/covers/` (SVG source and 1600x1000 PNG).
+`node design/covers/build.mjs` regenerates them; `pnpm covers` also uploads them and sets each matching
+work's cover in the connected database. In production, upload the PNGs through `/admin` instead.
+
 ## Moving content between databases
 
 `scripts/content-export.ts` writes `content.json` plus media files from the connected database (read-only);

@@ -15,7 +15,9 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "sync": "payload run scripts/sync.ts",
-    "migrate:create": "BLOB_READ_WRITE_TOKEN=vercel_blob_rw_schemaonly_dummy payload migrate:create"
+    "covers": "node design/covers/build.mjs && payload run scripts/apply-covers.ts",
+    "migrate:create": "BLOB_READ_WRITE_TOKEN=vercel_blob_rw_schemaonly_dummy payload migrate:create",
+    "works:add": "payload run scripts/add-works.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

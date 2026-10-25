@@ -99,7 +99,7 @@ export async function getSites(): Promise<Site[]> {
       title: work.title,
       summary: work.summary,
       tags: (work.tags ?? []).flatMap((tag) => populated<Tag>(tag)?.name ?? []),
-      url: work.website?.liveUrl ?? '#',
+      url: work.website?.liveUrl ?? undefined,
       imageUrl: cover?.sizes?.card?.url ?? cover?.url ?? undefined,
       imageAlt: cover?.alt ?? work.title,
       activityLabel: snapshot

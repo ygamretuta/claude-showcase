@@ -51,14 +51,20 @@ export function SiteCard({ site }: { site: Site }) {
               </span>
             ))}
           </CardItem>
-          <CardItem
-            translateZ={30}
-            as="a"
-            href={site.url}
-            className="inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground"
-          >
-            Visit
-          </CardItem>
+{site.url ? (
+            <CardItem
+              translateZ={30}
+              as="a"
+              href={site.url}
+              className="inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground"
+            >
+              Visit
+            </CardItem>
+          ) : (
+            <CardItem translateZ={30} className="text-xs text-muted-foreground">
+              Not hosted online
+            </CardItem>
+          )}
         </div>
       </CardBody>
     </CardContainer>
