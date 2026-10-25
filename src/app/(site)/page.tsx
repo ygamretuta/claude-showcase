@@ -12,7 +12,7 @@ export default async function Home() {
           Sites I built with Claude
         </h1>
         <p className="mt-4 text-base text-muted-foreground">
-          Placeholder intro. A short line about who you are and what you make.
+          {"Apps and sites I've made with Claude, with live links and recent GitHub activity where they're public."}
         </p>
       </header>
       <SiteGrid sites={sites} />
