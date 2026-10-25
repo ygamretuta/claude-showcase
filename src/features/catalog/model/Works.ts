@@ -67,7 +67,11 @@ export const Works: CollectionConfig = {
       type: 'group',
       admin: { condition: isKind('website') },
       fields: [
-        { name: 'liveUrl', type: 'text', required: true },
+        {
+          name: 'liveUrl',
+          type: 'text',
+          admin: { description: 'Leave empty for apps that are not hosted online.' },
+        },
         { name: 'repositoryUrl', type: 'text' },
         { name: 'builtWith', type: 'array', fields: [{ name: 'name', type: 'text', required: true }] },
         { name: 'screenshots', type: 'relationship', relationTo: 'media', hasMany: true },

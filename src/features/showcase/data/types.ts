@@ -3,7 +3,8 @@ export interface Site {
   title: string;
   summary: string;
   tags: string[];
-  url: string;
+  /** Live site; absent for apps that are not hosted online. */
+  url?: string;
   /** Pre-formatted GitHub activity line, e.g. "Active 2 days ago". */
   activityLabel?: string;
   /** Cover image from the CMS; the gradient is shown when absent. */

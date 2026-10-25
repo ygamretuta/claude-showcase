@@ -24,7 +24,8 @@ function sector(cx, cy, r0, r1, a0, a1) {
   const [x1, y1] = polar(cx, cy, r1, a1);
   const [x2, y2] = polar(cx, cy, r0, a1);
   const [x3, y3] = polar(cx, cy, r0, a0);
-  return `M${x0} ${y0}A${r1} ${r1} 0 0 1 ${x1} ${y1}L${x2} ${y2}A${r0} ${r0} 0 0 0 ${x3} ${y3}Z`;
+  const large = a1 - a0 > 180 ? 1 : 0;
+  return `M${x0} ${y0}A${r1} ${r1} 0 ${large} 1 ${x1} ${y1}L${x2} ${y2}A${r0} ${r0} 0 ${large} 0 ${x3} ${y3}Z`;
 }
 
 // ---------------------------------------------------------------- colorwheel
@@ -275,7 +276,88 @@ function showcase() {
   );
 }
 
-const covers = { colorwheel, santayo, 'pixel-quests': pixelQuests, 'claude-showcase': showcase };
+
+// -------------------------------------------------------------- pse-tracker
+function pseTracker() {
+  const up = '#22C55E';
+  const down = '#EF4444';
+  let seed = 11;
+  const rnd = () => {
+    seed = (seed * 1664525 + 1013904223) % 4294967296;
+    return seed / 4294967296;
+  };
+  const grip = [0, 1, 2]
+    .map((r) => [0, 1].map((c) => `<circle cx="${28 + c * 9}" cy="${24 + r * 9}" r="2.6" fill="#64748B"/>`).join(''))
+    .join('');
+  /** A widget: rounded panel with a grip and a title bar; content is in panel-local coordinates. */
+  const panel = (x, y, w, h, content, extra = '') =>
+    `<g transform="translate(${x} ${y})" ${extra}><rect width="${w}" height="${h}" rx="22" fill="#131C2E" stroke="#22304A" stroke-width="2"/>${grip}<rect x="62" y="24" width="150" height="14" rx="7" fill="#33435F"/>${content}</g>`;
+
+  // price chart (local coords of the 800x500 panel)
+  const chartTop = 100;
+  const chartBottom = 350;
+  let price = 0.18;
+  let candles = '';
+  let volume = '';
+  for (let i = 0; i < 22; i += 1) {
+    const open = price;
+    price = Math.min(0.92, Math.max(0.08, price + (rnd() - 0.34) * 0.3));
+    const close = price;
+    const hi = Math.max(open, close) + rnd() * 0.06;
+    const lo = Math.min(open, close) - rnd() * 0.06;
+    const y = (v) => chartBottom - v * (chartBottom - chartTop);
+    const color = close >= open ? up : down;
+    const x = 70 + i * 32;
+    candles += `<line x1="${x}" x2="${x}" y1="${y(hi)}" y2="${y(lo)}" stroke="${color}" stroke-width="3" stroke-linecap="round"/><rect x="${x - 8}" y="${y(Math.max(open, close))}" width="16" height="${Math.max(6, Math.abs(y(open) - y(close)))}" rx="3" fill="${color}"/>`;
+    const h = 14 + rnd() * 44;
+    volume += `<rect x="${x - 8}" y="${450 - h}" width="16" height="${h}" rx="3" fill="#33435F"/>`;
+  }
+  const gridlines = [100, 162, 225, 287, 350]
+    .map((y) => `<line x1="40" x2="760" y1="${y}" y2="${y}" stroke="#1E2B44" stroke-width="2"/>`)
+    .join('');
+  const chart = gridlines + candles + volume;
+
+  // watchlist rows (540x190 panel)
+  const row = (y, positive) => {
+    const c = positive ? up : down;
+    const tri = positive ? 'M0 20L12 0L24 20Z' : 'M0 0L12 20L24 0Z';
+    return `<g transform="translate(0 ${y})"><rect x="30" y="0" width="86" height="40" rx="10" fill="#1E2B44"/><rect x="134" y="8" width="150" height="13" rx="6.5" fill="#33435F"/><rect x="134" y="28" width="80" height="9" rx="4.5" fill="#25344F"/><path transform="translate(380 8)" d="${tri}" fill="${c}"/><rect x="430" y="12" width="76" height="16" rx="8" fill="${c}" opacity=".85"/></g>`;
+  };
+  const watchlist = row(70, true) + row(124, false);
+
+  // market breadth (540x280 panel): donut + bars
+  const donut = `<g transform="translate(40 80)"><path d="${sector(110, 100, 62, 98, 0, 214)}" fill="${up}"/><path d="${sector(110, 100, 62, 98, 214, 360)}" fill="${down}"/></g>
+    <g transform="translate(280 110)"><rect width="220" height="14" rx="7" fill="#33435F"/><rect y="34" width="170" height="12" rx="6" fill="#25344F"/><rect y="62" width="200" height="12" rx="6" fill="#25344F"/><rect y="90" width="140" height="12" rx="6" fill="#25344F"/></g>
+    <g transform="translate(280 230)"><rect width="220" height="22" rx="11" fill="${down}"/><rect width="140" height="22" rx="11" fill="${up}"/></g>`;
+
+  // "Put money on" calculator (560x250 panel)
+  const calc = `<rect x="30" y="70" width="230" height="52" rx="14" fill="#1E2B44"/><rect x="300" y="70" width="230" height="52" rx="14" fill="#1E2B44"/><rect x="30" y="150" width="500" height="64" rx="32" fill="${up}"/><rect x="190" y="174" width="180" height="16" rx="8" fill="#0B1220" opacity=".65"/>`;
+
+  // news widget being dragged (360x270 panel)
+  const news = `<g transform="translate(30 90)"><rect width="300" height="14" rx="7" fill="#33435F"/><rect y="30" width="240" height="12" rx="6" fill="#25344F"/><rect y="68" width="290" height="14" rx="7" fill="#33435F"/><rect y="98" width="210" height="12" rx="6" fill="#25344F"/></g>`;
+
+  return svg(
+    `<rect width="${W}" height="${H}" fill="#0B1220"/>
+     <circle cx="1400" cy="120" r="320" fill="rgba(34,197,94,0.07)"/>
+     <circle cx="160" cy="940" r="300" fill="rgba(59,130,246,0.09)"/>
+     ${panel(110, 130, 800, 500, chart)}
+     ${panel(950, 130, 540, 190, watchlist)}
+     ${panel(950, 350, 540, 280, donut)}
+     ${panel(110, 670, 560, 250, calc)}
+     <rect x="710" y="700" width="380" height="220" rx="22" fill="rgba(59,130,246,0.06)" stroke="#3B82F6" stroke-width="4" stroke-dasharray="14 12" opacity=".8"/>
+     <g transform="rotate(-3 1310 785)">${panel(1130, 650, 360, 270, news, 'filter="url(#lift)"')}</g>
+     <g transform="translate(1010 770) rotate(-8)" filter="url(#lift)"><path d="M0 0L0 112L30 86L52 134L76 123L54 76L96 76Z" fill="#fff" stroke="#0B1220" stroke-width="6" stroke-linejoin="round"/></g>`,
+    `<filter id="lift" x="-20%" y="-20%" width="150%" height="160%"><feDropShadow dx="0" dy="30" stdDeviation="24" flood-color="#000" flood-opacity=".55"/></filter>`,
+  );
+}
+
+const covers = {
+  colorwheel,
+  santayo,
+  'pixel-quests': pixelQuests,
+  'claude-showcase': showcase,
+  'pse-tracker': pseTracker,
+};
 
 for (const [slug, make] of Object.entries(covers)) {
   const markup = make();

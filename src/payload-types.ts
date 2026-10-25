@@ -271,7 +271,10 @@ export interface Work {
       }[]
     | null;
   website?: {
-    liveUrl: string;
+    /**
+     * Leave empty for apps that are not hosted online.
+     */
+    liveUrl?: string | null;
     repositoryUrl?: string | null;
     builtWith?:
       | {
