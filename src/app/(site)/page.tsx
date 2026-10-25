@@ -1,6 +1,8 @@
 import { SiteGrid } from '@/features/showcase/components/SiteGrid';
 import { getSites } from '@/features/showcase/data/sites';
 
+export const revalidate = 60;
+
 export default async function Home() {
   const sites = await getSites();
 

@@ -1,5 +1,5 @@
 import config from '@payload-config';
-import { cacheLife, cacheTag } from 'next/cache';
+import { unstable_cache } from 'next/cache';
 import { getPayload } from 'payload';
 
 import { describeActivity } from '@/features/activity/lib/describe';
@@ -65,11 +65,7 @@ function populated<T extends object>(value: number | T | null | undefined): T | 
 }
 
 /** Published website works from the CMS; placeholders when no database is configured. */
-export async function getSites(): Promise<Site[]> {
-  'use cache';
-  cacheTag('works');
-  cacheLife('minutes');
-
+async function loadSites(): Promise<Site[]> {
   if (!process.env.DATABASE_URI && !process.env.DATABASE_URL) return placeholders;
 
   const payload = await getPayload({ config });
@@ -115,3 +111,6 @@ export async function getSites(): Promise<Site[]> {
     };
   });
 }
+
+/** Cached for a minute; the sync and admin endpoints refresh it with `revalidateTag('works')`. */
+export const getSites = unstable_cache(loadSites, ['sites'], { tags: ['works'], revalidate: 60 });
