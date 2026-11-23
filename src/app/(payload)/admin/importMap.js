@@ -1,3 +1,4 @@
+import { GenerateCoverButton as GenerateCoverButton_121cb7dd70683ab51c1f43d62d2d91e8 } from '../../../features/media/components/GenerateCoverButton'
 import { SyncButton as SyncButton_e1842216c8cc493611fe71ee5f5e9481 } from '../../../features/activity/components/SyncButton'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -27,6 +28,7 @@ import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e
 
 /** @type import('payload').ImportMap */
 export const importMap = {
+  "/features/media/components/GenerateCoverButton#GenerateCoverButton": GenerateCoverButton_121cb7dd70683ab51c1f43d62d2d91e8,
   "/features/activity/components/SyncButton#SyncButton": SyncButton_e1842216c8cc493611fe71ee5f5e9481,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,

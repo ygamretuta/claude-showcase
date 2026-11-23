@@ -47,6 +47,14 @@ export const Works: CollectionConfig = {
     },
     { name: 'summary', type: 'textarea', required: true, maxLength: 280 },
     { name: 'cover', type: 'relationship', relationTo: 'media', required: true },
+    {
+      // Alternative to uploading: draw a cover from the title and summary (media domain).
+      name: 'coverGenerator',
+      type: 'ui',
+      admin: {
+        components: { Field: '/features/media/components/GenerateCoverButton#GenerateCoverButton' },
+      },
+    },
     { name: 'tags', type: 'relationship', relationTo: 'tags', hasMany: true },
     {
       name: 'publishedOn',

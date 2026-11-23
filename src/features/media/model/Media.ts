@@ -13,6 +13,16 @@ export const Media: CollectionConfig = {
     update: isAuthenticated,
     delete: isAuthenticated,
   },
+  endpoints: [
+    {
+      path: '/generate-cover',
+      method: 'post',
+      handler: async (req) => {
+        const { handleGenerateCover } = await import('../server/generateCover');
+        return handleGenerateCover(req);
+      },
+    },
+  ],
   upload: {
     mimeTypes: ['image/*', 'video/mp4', 'video/webm'],
     focalPoint: true,
