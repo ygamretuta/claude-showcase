@@ -25,6 +25,7 @@
     "@payloadcms/next": "3.90.2",
     "@payloadcms/richtext-lexical": "3.90.2",
     "@payloadcms/storage-vercel-blob": "3.90.2",
+    "@payloadcms/ui": "3.90.2",
     "@tabler/icons-react": "^3.52.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
