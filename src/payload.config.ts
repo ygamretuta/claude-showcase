@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
-import { buildConfig } from 'payload';
+import { buildConfig, type CollectionConfig } from 'payload';
 import sharp from 'sharp';
 
 import { RepositoryActivity } from '@/features/activity/model/RepositoryActivity';
@@ -20,9 +20,27 @@ import { Tags } from '@/features/taxonomy/model/Tags';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// The works list gets the refresh button here, in the composition root, so the catalog
+// domain stays independent of the activity domain.
+const WorksWithRefresh: CollectionConfig = {
+  ...Works,
+  admin: {
+    ...Works.admin,
+    components: {
+      ...Works.admin?.components,
+      beforeListTable: [
+        {
+          path: '/features/activity/components/SyncButton#SyncButton',
+          clientProps: { label: 'Refresh works' },
+        },
+      ],
+    },
+  },
+};
+
 export default buildConfig({
   admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
-  collections: [Users, Media, VideoEmbeds, Tags, Works, Exhibits, RepositoryActivity],
+  collections: [Users, Media, VideoEmbeds, Tags, WorksWithRefresh, Exhibits, RepositoryActivity],
   globals: [Home, Profile, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET ?? '',
